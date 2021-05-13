@@ -1,0 +1,12 @@
+name: ci-videos-build
+on: [push]
+jobs:
+  check-applications:
+    runs-on: alpine:3.13.4
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+      - run: mvn -f videos verify
