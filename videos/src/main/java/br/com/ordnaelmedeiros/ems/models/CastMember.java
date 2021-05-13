@@ -1,10 +1,13 @@
 package br.com.ordnaelmedeiros.ems.models;
 
+import static javax.persistence.EnumType.STRING;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -17,9 +20,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "genres")
+@Table(name = "cast_members")
 @Where(clause = "deleted_at is null")
-public class Genre {
+public class CastMember {
 
 	@Id
 	public UUID id;
@@ -27,6 +30,10 @@ public class Genre {
 	@NotNull
 	@Size(max = 255)
 	public String name;
+	
+	@NotNull
+	@Enumerated(STRING)
+	public Type type;
 	
 	public Boolean isActive;
 	
@@ -52,6 +59,11 @@ public class Genre {
 	private void preUpdate() {
 		if (isActive==null)
 			isActive = true;
+	}
+	
+	public static enum Type {
+		DIRECTOR,
+		ACTOR;
 	}
 	
 }

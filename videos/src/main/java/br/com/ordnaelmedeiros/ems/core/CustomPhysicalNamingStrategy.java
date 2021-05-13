@@ -33,7 +33,7 @@ public final class CustomPhysicalNamingStrategy implements PhysicalNamingStrateg
 
     private Identifier convertToSnakeCase(final Identifier identifier) {
     	
-    	if (identifier==null)
+    	if (identifier == null)
     		return null;
     	
         final String regex = "([a-z])([A-Z])";

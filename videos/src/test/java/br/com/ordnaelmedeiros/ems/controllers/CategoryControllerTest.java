@@ -3,6 +3,7 @@ package br.com.ordnaelmedeiros.ems.controllers;
 import static br.com.ordnaelmedeiros.ems.TestUtils.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,9 +22,7 @@ public class CategoryControllerTest {
 	
 	@Test
 	public void fieldsNotNull() {
-		Category category = new Category() {{
-			description = "test";
-		}};
+		Category category = new Category();
 		when().body(category).post().then()
            .statusCode(400)
            .body(containsString("name: não deve ser nulo"));
@@ -32,21 +31,25 @@ public class CategoryControllerTest {
 	@Test
 	public void crud() {
 		
-		Category category = new Category() {{
-			name = "test";
-		}};
+		Category category = new Category();
+		category.name = "test";
+		category.description = "teste description";
 		
 		category = when().body(category).post().then()
-			//.body(is("ttt"))
 			.statusCode(201)
 			.extract().as(Category.class);
         
         when().get("/"+category.id).then()
 	    	.statusCode(200)
 	    	.body("id", is(category.id.toString()))
-	    	.body("name", is(category.name));
+	    	.body("isActive", is(true))
+	    	.body("createdAt", notNullValue())
+	    	.body("updatedAt", notNullValue())
+	    	.body("name", is(category.name))
+	    	.body("description", is(category.description));
         
         category.name = "test 2";
+        category.isActive = false;
         
         when().body(category).put("/"+category.id).then()
 	    	.statusCode(204);
@@ -54,7 +57,8 @@ public class CategoryControllerTest {
         when().get("/"+category.id).then()
 	    	.statusCode(200)
 	    	.body("id", is(category.id.toString()))
-	    	.body("name", is(category.name));
+	    	.body("name", is(category.name))
+	    	.body("isActive", is(false));
         
         when().delete("/"+category.id).then()
 	    	.statusCode(204);

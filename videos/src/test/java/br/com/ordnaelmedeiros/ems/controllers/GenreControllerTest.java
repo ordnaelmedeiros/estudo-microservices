@@ -3,6 +3,7 @@ package br.com.ordnaelmedeiros.ems.controllers;
 import static br.com.ordnaelmedeiros.ems.TestUtils.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,9 +31,8 @@ public class GenreControllerTest {
 	@Test
 	public void crud() {
 		
-		Genre genre = new Genre() {{
-			name = "test";
-		}};
+		Genre genre = new Genre();
+		genre.name = "test";
 		
 		genre = when().body(genre).post().then()
            .statusCode(201)
@@ -41,17 +41,23 @@ public class GenreControllerTest {
         when().get("/"+genre.id).then()
 	    	.statusCode(200)
 	    	.body("id", is(genre.id.toString()))
-	    	.body("name", is(genre.name));
+	    	.body("name", is(genre.name))
+	    	.body("isActive", is(true))
+	    	.body("createdAt", notNullValue())
+	    	.body("updatedAt", notNullValue());
         
         genre.name = "test 2";
+        genre.isActive = false;
         
         when().body(genre).put("/"+genre.id).then()
 	    	.statusCode(204);
         
         when().get("/"+genre.id).then()
 	    	.statusCode(200)
+	    	
 	    	.body("id", is(genre.id.toString()))
-	    	.body("name", is(genre.name));
+	    	.body("name", is(genre.name))
+	    	.body("isActive", is(false));
         
         when().delete("/"+genre.id).then()
 	    	.statusCode(204);
@@ -68,7 +74,6 @@ public class GenreControllerTest {
 			
 			Genre gen = new Genre();
 			gen.name = "test " + i;
-			gen.isActive = true;
 			
 			when().body(gen).post().then()
 	           .statusCode(201);

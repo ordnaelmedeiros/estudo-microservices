@@ -23,10 +23,10 @@ public class ConstraintViolationMapper implements ExceptionMapper<ConstraintViol
 	}
 	
 	private String cvToMsg(ConstraintViolation<?> cv) {
-		return Joiner.on(": ").join(last(cv.getPropertyPath()), cv.getMessage()).toString();
+		return Joiner.on(": ").join(lastName(cv.getPropertyPath()), cv.getMessage()).toString();
 	}
 
-	private String last(Path path) {
+	private String lastName(Path path) {
 		var iterator = path.iterator();
 		String name = "";
 		while(iterator.hasNext()) {

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,13 +18,14 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "categories")
-@Where(clause="deleted_at is null")
+@Where(clause = "deleted_at is null")
 public class Category {
 
 	@Id
 	public UUID id;
 	
 	@NotNull
+	@Size(max = 255)
 	public String name;
 	
 	@Column(columnDefinition = "text")
