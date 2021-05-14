@@ -2,8 +2,10 @@ package br.com.ordnaelmedeiros.ems.controllers;
 
 import static br.com.ordnaelmedeiros.ems.TestUtils.when;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,32 +40,39 @@ class GenreControllerTest {
            .statusCode(201)
            .extract().as(Genre.class);
         
-        when().get("/"+genre.id).then()
+        when().get("/"+genre.getId()).then()
 	    	.statusCode(200)
-	    	.body("id", is(genre.id.toString()))
+	    	.body("id", is(genre.getId().toString()))
 	    	.body("name", is(genre.name))
 	    	.body("isActive", is(true))
 	    	.body("createdAt", notNullValue())
-	    	.body("updatedAt", notNullValue());
+	    	.body("updatedAt", notNullValue())
+	    	.body("deletedAt", nullValue());
         
         genre.name = "test 2";
-        genre.isActive = false;
+        genre.setIsActive(false);
         
-        when().body(genre).put("/"+genre.id).then()
+        when().body(genre).put("/"+genre.getId()).then()
 	    	.statusCode(204);
         
-        when().get("/"+genre.id).then()
+        when().get("/"+genre.getId()).then()
 	    	.statusCode(200)
 	    	
-	    	.body("id", is(genre.id.toString()))
+	    	.body("id", is(genre.getId().toString()))
 	    	.body("name", is(genre.name))
 	    	.body("isActive", is(false));
         
-        when().delete("/"+genre.id).then()
+        when().delete("/"+genre.getId()).then()
 	    	.statusCode(204);
         
-        when().get("/"+genre.id).then()
+        when().get("/"+genre.getId()).then()
 	    	.statusCode(404);
+        
+        when().get("/deleted").then()
+    		.statusCode(200)
+    		.body("size()", is(1))
+    		//.body("get(0).id", is(genre.getId().toString()))
+    		.body("id", hasItem(genre.getId().toString()));
 	        		
 	}
 	
