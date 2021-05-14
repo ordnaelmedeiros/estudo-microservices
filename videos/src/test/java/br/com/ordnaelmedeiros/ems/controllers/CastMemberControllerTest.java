@@ -15,15 +15,15 @@ import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 @Tag("integration")
-public class CastMemberControllerTest {
+class CastMemberControllerTest {
 
 	@BeforeEach
-	public void beforeAll() {
+	void beforeAll() {
 		RestAssuredURLManager.setURL(false, "/cast-members");
 	}
 	
 	@Test
-	public void fieldsNotNull() {
+	void fieldsNotNull() {
 		CastMember castMember = new CastMember();
 		when().body(castMember).post().then()
            .statusCode(400)
@@ -32,7 +32,7 @@ public class CastMemberControllerTest {
 	}
 	
 	@Test
-	public void crud() {
+	void crud() {
 		
 		CastMember castMember = new CastMember();
 		castMember.name = "test";
@@ -74,7 +74,7 @@ public class CastMemberControllerTest {
 	}
 	
 	@Test
-	public void list() {
+	void list() {
 		
 		for (int i = 0; i < 10; i++) {
 			

@@ -16,12 +16,12 @@ import io.quarkus.test.junit.QuarkusTest;
 public class CategoryControllerTest {
 
 	@BeforeEach
-	public void beforeAll() {
+	void beforeAll() {
 		RestAssuredURLManager.setURL(false, "/categories");
 	}
 	
 	@Test
-	public void fieldsNotNull() {
+	void fieldsNotNull() {
 		Category category = new Category();
 		when().body(category).post().then()
            .statusCode(400)
@@ -29,7 +29,7 @@ public class CategoryControllerTest {
 	}
 	
 	@Test
-	public void crud() {
+	void crud() {
 		
 		Category category = new Category();
 		category.name = "test";
@@ -69,7 +69,7 @@ public class CategoryControllerTest {
 	}
 	
 	@Test
-	public void list() {
+	void list() {
 		
 		for (int i = 0; i < 10; i++) {
 			

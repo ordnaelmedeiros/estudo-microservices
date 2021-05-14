@@ -13,15 +13,15 @@ import io.quarkus.test.common.RestAssuredURLManager;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class GenreControllerTest {
+class GenreControllerTest {
 
 	@BeforeEach
-	public void beforeAll() {
+	void beforeAll() {
 		RestAssuredURLManager.setURL(false, "/genres");
 	}
 	
 	@Test
-	public void fieldsNotNull() {
+	void fieldsNotNull() {
 		Genre genre = new Genre();
 		when().body(genre).post().then()
            .statusCode(400)
@@ -29,7 +29,7 @@ public class GenreControllerTest {
 	}
 	
 	@Test
-	public void crud() {
+	void crud() {
 		
 		Genre genre = new Genre();
 		genre.name = "test";
@@ -68,7 +68,7 @@ public class GenreControllerTest {
 	}
 	
 	@Test
-	public void list() {
+	void list() {
 		
 		for (int i = 0; i < 10; i++) {
 			
