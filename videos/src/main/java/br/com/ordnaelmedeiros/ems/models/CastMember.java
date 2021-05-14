@@ -47,6 +47,7 @@ public class CastMember {
 	public LocalDateTime deletedAt;
 	
 	public void markDeleted() {
+		System.out.println("CastMember:markDeleted");
 		this.deletedAt = LocalDateTime.now();
 	}
 	
