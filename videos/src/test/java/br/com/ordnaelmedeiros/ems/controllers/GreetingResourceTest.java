@@ -1,4 +1,4 @@
-package br.com.ordnaelmedeiros.ems;
+package br.com.ordnaelmedeiros.ems.controllers;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;

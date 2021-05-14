@@ -12,19 +12,12 @@ public class CastMemberRespository implements PanacheRepositoryBase<CastMember, 
 
 	@Override
 	public void delete(CastMember entity) {
-		System.out.println("CastMemberRespository::markDeleted");
 		entity.markDeleted();
 	}
 	
 	@Override
 	public boolean deleteById(UUID id) {
-		System.out.println("CastMemberRespository::deleteById");
-		findByIdOptional(id).ifPresent(CastMember::markDeleted);
-		return true;
-	}
-	
-	public boolean teste() {
-		System.out.println("CastMemberRespository:teste");
+		findByIdOptional(id).ifPresent(this::delete);
 		return true;
 	}
 	
