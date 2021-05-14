@@ -17,7 +17,7 @@ public class GenreRespository implements PanacheRepositoryBase<Genre, UUID> {
 	
 	@Override
 	public boolean deleteById(UUID id) {
-		findByIdOptional(id).ifPresent(Genre::markDeleted);
+		findByIdOptional(id).ifPresent(this::delete);
 		return true;
 	}
 	

@@ -44,7 +44,7 @@ public class CastMember {
 	@UpdateTimestamp
 	public LocalDateTime updatedAt;
 	
-	public LocalDateTime deletedAt;
+	private LocalDateTime deletedAt;
 	
 	public void markDeleted() {
 		this.deletedAt = LocalDateTime.now();
@@ -61,7 +61,7 @@ public class CastMember {
 			isActive = true;
 	}
 	
-	public static enum Type {
+	public enum Type {
 		DIRECTOR,
 		ACTOR;
 	}

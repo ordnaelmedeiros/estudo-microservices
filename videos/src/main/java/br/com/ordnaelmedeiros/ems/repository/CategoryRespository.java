@@ -17,7 +17,7 @@ public class CategoryRespository implements PanacheRepositoryBase<Category, UUID
 	
 	@Override
 	public boolean deleteById(UUID id) {
-		findByIdOptional(id).ifPresent(Category::markDeleted);
+		findByIdOptional(id).ifPresent(this::delete);
 		return true;
 	}
 	

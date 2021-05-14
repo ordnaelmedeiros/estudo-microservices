@@ -1,4 +1,4 @@
-package br.com.ordnaelmedeiros.ems;
+package br.com.ordnaelmedeiros.ems.controllers;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,7 +10,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Tag(name = "Hello")
 @Path("/hello-resteasy")
 public class GreetingResource {
-
+	
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {

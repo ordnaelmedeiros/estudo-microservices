@@ -36,9 +36,9 @@ public final class CustomPhysicalNamingStrategy implements PhysicalNamingStrateg
     	if (identifier == null)
     		return null;
     	
-        final String regex = "([a-z])([A-Z])";
-        final String replacement = "$1_$2";
-        final String newName = identifier.getText()
+        final var regex = "([a-z])([A-Z])";
+        final var replacement = "$1_$2";
+        final var newName = identifier.getText()
           .replaceAll(regex, replacement)
           .toLowerCase();
         return Identifier.toIdentifier(newName);

@@ -17,7 +17,7 @@ public class CastMemberRespository implements PanacheRepositoryBase<CastMember, 
 	
 	@Override
 	public boolean deleteById(UUID id) {
-		findByIdOptional(id).ifPresent(CastMember::markDeleted);
+		findByIdOptional(id).ifPresent(this::delete);
 		return true;
 	}
 	
