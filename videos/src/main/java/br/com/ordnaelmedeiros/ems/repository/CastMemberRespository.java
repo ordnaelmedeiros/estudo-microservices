@@ -10,16 +10,21 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 @ApplicationScoped
 public class CastMemberRespository implements PanacheRepositoryBase<CastMember, UUID> {
 
-	@Override
+	//@Override
 	public void delete(CastMember entity) {
 		System.out.println("CastMemberRespository::markDeleted");
 		entity.markDeleted();
 	}
 	
-	@Override
+	//@Override
 	public boolean deleteById(UUID id) {
 		System.out.println("CastMemberRespository::deleteById");
 		findByIdOptional(id).ifPresent(CastMember::markDeleted);
+		return true;
+	}
+	
+	public boolean teste() {
+		System.out.println("CastMemberRespository:teste");
 		return true;
 	}
 	

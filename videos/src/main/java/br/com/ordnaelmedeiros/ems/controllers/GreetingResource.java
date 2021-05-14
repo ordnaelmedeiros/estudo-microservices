@@ -1,4 +1,4 @@
-package br.com.ordnaelmedeiros.ems;
+package br.com.ordnaelmedeiros.ems.controllers;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
