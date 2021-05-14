@@ -8,11 +8,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
+      - name: Build java
+        uses: actions/setup-java@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           distribution: 'adopt'
           java-version: '11'
       - run: mvn -f videos --batch-mode verify
+      - run: mvn -f videos org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
