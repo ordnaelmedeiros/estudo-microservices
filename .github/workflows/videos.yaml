@@ -30,7 +30,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+        run: mvn -f videos -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
