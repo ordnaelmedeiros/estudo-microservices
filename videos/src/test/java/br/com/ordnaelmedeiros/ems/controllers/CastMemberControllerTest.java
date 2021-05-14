@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import br.com.ordnaelmedeiros.ems.models.CastMember;
@@ -13,6 +14,7 @@ import io.quarkus.test.common.RestAssuredURLManager;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
+@Tag("integration")
 public class CastMemberControllerTest {
 
 	@BeforeEach
