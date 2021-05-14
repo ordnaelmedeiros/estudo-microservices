@@ -171,9 +171,9 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<sonar.host.url>http://localhost:9000</sonar.host.url>
-				<sonar.organization>ms-videos</sonar.organization>
-				<sonar.login>a919102c8248864704809cb21c153e786df47b9f</sonar.login>
+				<sonar.projectKey>ordnaelmedeiros_estudo-microservices</sonar.projectKey>
+				<sonar.organization>ordnaelmedeiros</sonar.organization>
+				<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 			</properties>
 		</profile>
 		<profile>
