@@ -3,7 +3,6 @@ package br.com.ordnaelmedeiros.ems.controllers;
 import static br.com.ordnaelmedeiros.ems.TestUtils.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -45,14 +44,10 @@ class CastMemberControllerTest {
         when().get("/"+castMember.getId()).then()
 	    	.statusCode(200)
 	    	.body("id", is(castMember.getId().toString()))
-	    	.body("isActive", is(true))
 	    	.body("type", is(castMember.getType().toString()))
-	    	.body("createdAt", notNullValue())
-	    	.body("updatedAt", notNullValue())
 	    	.body("name", is(castMember.getName()));
         
         castMember.setName("test 2");
-        castMember.setIsActive(false);
         castMember.setType(CastMember.Type.ACTOR);
         
         when().body(castMember).put("/"+castMember.getId()).then()
@@ -61,9 +56,7 @@ class CastMemberControllerTest {
         when().get("/"+castMember.getId()).then()
 	    	.statusCode(200)
 	    	.body("id", is(castMember.getId().toString()))
-	    	.body("name", is(castMember.getName()))
-	    	.body("type", is(castMember.getType().toString()))
-	    	.body("isActive", is(false));
+	    	.body("name", is(castMember.getName()));
         
         when().delete("/"+castMember.getId()).then()
 	    	.statusCode(204);
