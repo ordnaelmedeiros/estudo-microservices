@@ -14,6 +14,13 @@ public class Genre extends EntityBase {
 
 	@NotNull
 	@Size(max = 255)
-	public String name;
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }

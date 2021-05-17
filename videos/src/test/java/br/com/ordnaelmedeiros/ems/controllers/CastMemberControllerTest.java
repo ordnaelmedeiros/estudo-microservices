@@ -35,40 +35,40 @@ class CastMemberControllerTest {
 	void crud() {
 		
 		CastMember castMember = new CastMember();
-		castMember.name = "test";
-		castMember.type = CastMember.Type.DIRECTOR;
+		castMember.setName("test");
+		castMember.setType(CastMember.Type.DIRECTOR);
 		
 		castMember = when().body(castMember).post().then()
 			.statusCode(201)
 			.extract().as(CastMember.class);
         
-        when().get("/"+castMember.id).then()
+        when().get("/"+castMember.getId()).then()
 	    	.statusCode(200)
-	    	.body("id", is(castMember.id.toString()))
+	    	.body("id", is(castMember.getId().toString()))
 	    	.body("isActive", is(true))
-	    	.body("type", is(castMember.type.toString()))
+	    	.body("type", is(castMember.getType().toString()))
 	    	.body("createdAt", notNullValue())
 	    	.body("updatedAt", notNullValue())
-	    	.body("name", is(castMember.name));
+	    	.body("name", is(castMember.getName()));
         
-        castMember.name = "test 2";
-        castMember.isActive = false;
-        castMember.type = CastMember.Type.ACTOR;
+        castMember.setName("test 2");
+        castMember.setIsActive(false);
+        castMember.setType(CastMember.Type.ACTOR);
         
-        when().body(castMember).put("/"+castMember.id).then()
+        when().body(castMember).put("/"+castMember.getId()).then()
 	    	.statusCode(204);
         
-        when().get("/"+castMember.id).then()
+        when().get("/"+castMember.getId()).then()
 	    	.statusCode(200)
-	    	.body("id", is(castMember.id.toString()))
-	    	.body("name", is(castMember.name))
-	    	.body("type", is(castMember.type.toString()))
+	    	.body("id", is(castMember.getId().toString()))
+	    	.body("name", is(castMember.getName()))
+	    	.body("type", is(castMember.getType().toString()))
 	    	.body("isActive", is(false));
         
-        when().delete("/"+castMember.id).then()
+        when().delete("/"+castMember.getId()).then()
 	    	.statusCode(204);
         
-        when().get("/"+castMember.id).then()
+        when().get("/"+castMember.getId()).then()
 	    	.statusCode(404);
 	        		
 	}
@@ -79,8 +79,8 @@ class CastMemberControllerTest {
 		for (int i = 0; i < 10; i++) {
 			
 			var item = new CastMember();
-			item.name = "test " + i;
-			item.type = CastMember.Type.DIRECTOR;
+			item.setName("test " + i);
+			item.setType(CastMember.Type.DIRECTOR);
 			
 			when().body(item).post().then()
 	           .statusCode(201);

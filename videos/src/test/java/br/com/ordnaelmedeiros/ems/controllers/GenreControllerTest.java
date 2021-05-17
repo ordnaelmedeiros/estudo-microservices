@@ -34,7 +34,7 @@ class GenreControllerTest {
 	void crud() {
 		
 		Genre genre = new Genre();
-		genre.name = "test";
+		genre.setName("test");
 		
 		genre = when().body(genre).post().then()
            .statusCode(201)
@@ -43,13 +43,13 @@ class GenreControllerTest {
         when().get("/"+genre.getId()).then()
 	    	.statusCode(200)
 	    	.body("id", is(genre.getId().toString()))
-	    	.body("name", is(genre.name))
+	    	.body("name", is(genre.getName()))
 	    	.body("isActive", is(true))
 	    	.body("createdAt", notNullValue())
 	    	.body("updatedAt", notNullValue())
 	    	.body("deletedAt", nullValue());
         
-        genre.name = "test 2";
+        genre.setName("test 2");
         genre.setIsActive(false);
         
         when().body(genre).put("/"+genre.getId()).then()
@@ -59,7 +59,7 @@ class GenreControllerTest {
 	    	.statusCode(200)
 	    	
 	    	.body("id", is(genre.getId().toString()))
-	    	.body("name", is(genre.name))
+	    	.body("name", is(genre.getName()))
 	    	.body("isActive", is(false));
         
         when().delete("/"+genre.getId()).then()
@@ -82,7 +82,7 @@ class GenreControllerTest {
 		for (int i = 0; i < 10; i++) {
 			
 			Genre gen = new Genre();
-			gen.name = "test " + i;
+			gen.setName("test " + i);
 			
 			when().body(gen).post().then()
 	           .statusCode(201);

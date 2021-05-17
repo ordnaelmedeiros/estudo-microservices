@@ -32,38 +32,38 @@ public class CategoryControllerTest {
 	void crud() {
 		
 		Category category = new Category();
-		category.name = "test";
-		category.description = "teste description";
+		category.setName("test");
+		category.setDescription("teste description");
 		
 		category = when().body(category).post().then()
 			.statusCode(201)
 			.extract().as(Category.class);
         
-        when().get("/"+category.id).then()
+        when().get("/"+category.getId()).then()
 	    	.statusCode(200)
-	    	.body("id", is(category.id.toString()))
+	    	.body("id", is(category.getId().toString()))
 	    	.body("isActive", is(true))
 	    	.body("createdAt", notNullValue())
 	    	.body("updatedAt", notNullValue())
-	    	.body("name", is(category.name))
-	    	.body("description", is(category.description));
+	    	.body("name", is(category.getName()))
+	    	.body("description", is(category.getDescription()));
         
-        category.name = "test 2";
-        category.isActive = false;
+        category.setName("test 2");
+        category.setIsActive(false);
         
-        when().body(category).put("/"+category.id).then()
+        when().body(category).put("/"+category.getId()).then()
 	    	.statusCode(204);
         
-        when().get("/"+category.id).then()
+        when().get("/"+category.getId()).then()
 	    	.statusCode(200)
-	    	.body("id", is(category.id.toString()))
-	    	.body("name", is(category.name))
+	    	.body("id", is(category.getId().toString()))
+	    	.body("name", is(category.getName()))
 	    	.body("isActive", is(false));
         
-        when().delete("/"+category.id).then()
+        when().delete("/"+category.getId()).then()
 	    	.statusCode(204);
         
-        when().get("/"+category.id).then()
+        when().get("/"+category.getId()).then()
 	    	.statusCode(404);
 	        		
 	}
@@ -74,7 +74,7 @@ public class CategoryControllerTest {
 		for (int i = 0; i < 10; i++) {
 			
 			Category cat = new Category();
-			cat.name = "test " + i;
+			cat.setName("test " + i);
 			
 			when().body(cat).post().then()
 	           .statusCode(201);
