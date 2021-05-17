@@ -24,11 +24,9 @@ public class GenreRespository implements PanacheRepositoryBase<Genre, UUID> {
 	
 	@SuppressWarnings("unchecked")
 	public List<Genre> deleted() {
-		return (List<Genre>) getEntityManager()
-				.createNativeQuery("select * from genres where deleted_at is not null", Genre.class)
-				.getResultList();
-//		return find("deletedAt is not null")
-//			.list();
+		return getEntityManager()
+			.createNativeQuery("select * from genres where deleted_at is not null", Genre.class)
+			.getResultList();
 	}
 	
 }
