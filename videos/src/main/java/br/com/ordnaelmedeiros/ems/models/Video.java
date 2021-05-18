@@ -1,9 +1,13 @@
 package br.com.ordnaelmedeiros.ems.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -21,9 +25,11 @@ public class Video extends EntityBase {
 	@Size(max = 255)
 	private String title;
 	
+	@NotNull
 	@Column(columnDefinition = "text")
 	private String description;
 	
+	@NotNull
 	private Integer yearLaunched;
 	
 	private Boolean opened;
@@ -31,7 +37,14 @@ public class Video extends EntityBase {
 	@Enumerated(EnumType.STRING)
 	private Rating rating;
 	
+	@NotNull
 	private Integer duration;
+	
+	@ManyToMany
+	private List<Category> categories;
+	
+	@ManyToMany
+	private List<Genre> genres;
 	
 	public String getTitle() {
 		return title;
@@ -73,6 +86,17 @@ public class Video extends EntityBase {
 	}
 	public void setDuration(Integer duration) {
 		this.duration = duration;
+	}
+	
+	public List<Category> getCategories() {
+		if (categories == null)
+			categories = new ArrayList<>();
+		return categories;
+	}
+	public List<Genre> getGenres() {
+		if (genres == null)
+			genres = new ArrayList<>();
+		return genres;
 	}
 
 	public enum Rating {

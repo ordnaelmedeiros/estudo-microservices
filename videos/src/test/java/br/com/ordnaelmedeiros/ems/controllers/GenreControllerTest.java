@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 class GenreControllerTest {
-
+	
 	@BeforeEach
 	void beforeAll() {
 		RestAssuredURLManager.setURL(false, "/genres");
@@ -91,7 +92,7 @@ class GenreControllerTest {
 		
 		when().get().then()
 			.statusCode(200)
-			.body("size()", is(10));
+			.body("size()", greaterThanOrEqualTo(10));
 		
 	}
 	

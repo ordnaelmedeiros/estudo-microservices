@@ -3,6 +3,7 @@ package br.com.ordnaelmedeiros.ems.controllers;
 import static br.com.ordnaelmedeiros.ems.TestUtils.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,7 +78,7 @@ class CategoryControllerTest {
 		
 		when().get().then()
 			.statusCode(200)
-			.body("size()", is(10));
+			.body("size()", greaterThanOrEqualTo(10));
 		
 	}
 	
