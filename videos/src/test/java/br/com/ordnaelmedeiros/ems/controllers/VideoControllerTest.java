@@ -28,19 +28,19 @@ class VideoControllerTest {
 	static Genre genre2 = new Genre();
 	
 	@BeforeAll
-	static void beforeAll() {
-		
-		category1.setName("Category 1");
-		category2.setName("Category 2");
-		
-		genre1.setName("Genre 1");
-		genre2.setName("Genre 2");
+	static void setUp() {
 		
 		RestAssuredURLManager.setURL(false, "/categories");
+		category1.setName("Category 1");
+		category2.setName("Category 2");
 		category1 = when().body(category1).post().then().extract().as(Category.class);
 		category2 = when().body(category2).post().then().extract().as(Category.class);
 		
 		RestAssuredURLManager.setURL(false, "/genres");
+		genre1.setName("Genre 1");
+		genre1.getCategories().add(category1);
+		genre2.setName("Genre 2");
+		genre2.getCategories().add(category2);
 		genre1 = when().body(genre1).post().then().extract().as(Genre.class);
 		genre2 = when().body(genre2).post().then().extract().as(Genre.class);
 		
@@ -74,7 +74,6 @@ class VideoControllerTest {
 		entity.getCategories().add(category1);
 		entity.getCategories().add(category2);
 		entity.getGenres().add(genre1);
-		
 		
 		UUID id = when().body(entity).post().then()
 			.statusCode(201)

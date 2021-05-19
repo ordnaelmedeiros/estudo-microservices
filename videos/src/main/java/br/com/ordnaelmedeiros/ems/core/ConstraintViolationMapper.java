@@ -16,9 +16,11 @@ public class ConstraintViolationMapper implements ExceptionMapper<ConstraintViol
 
 	@Override
 	public Response toResponse(ConstraintViolationException exception) {
-		var msg = exception.getConstraintViolations().stream()
-        	.map(this::cvToMsg)
-        	.collect(Collectors.joining(", "));
+		var msg = exception.getMessage();
+		if (exception.getConstraintViolations()!=null && !exception.getConstraintViolations().isEmpty())
+			msg = exception.getConstraintViolations().stream()
+	        	.map(this::cvToMsg)
+	        	.collect(Collectors.joining(", "));
 		return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
 	}
 	
