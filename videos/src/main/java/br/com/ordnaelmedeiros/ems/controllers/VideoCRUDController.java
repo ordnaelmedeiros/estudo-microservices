@@ -9,5 +9,5 @@ import io.quarkus.rest.data.panache.ResourceProperties;
 
 
 @ResourceProperties(hal = true, path = "videos", paged = true)
-public interface VideoCRUDController extends PanacheRepositoryResource<VideoRespository, Video, UUID> { 
+public interface VideoCRUDController extends PanacheRepositoryResource<VideoRespository, Video, UUID> {
 }

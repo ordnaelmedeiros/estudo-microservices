@@ -76,6 +76,7 @@ class VideoControllerTest {
 		entity.getGenres().add(genre1);
 		
 		UUID id = when().body(entity).post().then()
+			//.body(is("ttt"))
 			.statusCode(201)
 			.extract().as(Video.class).getId();
         

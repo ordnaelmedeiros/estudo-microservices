@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 @Entity
 @Table(name = "genres")
 @Where(clause = "deleted_at is null")
@@ -23,6 +25,7 @@ public class Genre extends EntityBase {
 	
 	@NotEmpty
 	@ManyToMany
+	@JsonIncludeProperties(value = {"id", "name"})
 	List<Category> categories;
 	
 	public String getName() {
