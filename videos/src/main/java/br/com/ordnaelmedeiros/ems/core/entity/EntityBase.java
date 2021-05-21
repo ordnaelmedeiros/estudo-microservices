@@ -1,4 +1,4 @@
-package br.com.ordnaelmedeiros.ems.models;
+package br.com.ordnaelmedeiros.ems.core.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

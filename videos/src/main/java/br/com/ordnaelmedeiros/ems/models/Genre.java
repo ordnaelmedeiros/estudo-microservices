@@ -14,6 +14,8 @@ import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
+import br.com.ordnaelmedeiros.ems.core.entity.EntityBase;
+
 @Entity
 @Table(name = "genres")
 @Where(clause = "deleted_at is null")

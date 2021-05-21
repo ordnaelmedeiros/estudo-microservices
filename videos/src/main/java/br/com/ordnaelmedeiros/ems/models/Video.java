@@ -2,13 +2,11 @@ package br.com.ordnaelmedeiros.ems.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FlushModeType;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -20,9 +18,9 @@ import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
-import br.com.ordnaelmedeiros.ems.repository.GenreRespository;
+import br.com.ordnaelmedeiros.ems.core.entity.EntityBase;
+import br.com.ordnaelmedeiros.ems.repository.VideoRespository;
 import io.quarkus.arc.Arc;
-import io.quarkus.arc.ArcContainer;
 
 @Entity
 @Table(name = "videos")
@@ -115,46 +113,12 @@ public class Video extends EntityBase {
 	
 	@PrePersist
 	@PreUpdate
-	private void defaultValues() {
+	private void prePersistUpdade() {
 		if (opened == null)
 			opened = false;
 		if (rating == null)
 			rating = Rating.L;
-		this.valid();
-	}
-	
-	private void valid() {
-		try {
-			System.out.println("Videos::valid");
-			
-			if (!getGenres().isEmpty() && !getCategories().isEmpty()) {
-				
-				ArcContainer arcContainer = Arc.container();
-				var genreRespository = arcContainer.instance(GenreRespository.class).get();
-				genreRespository.getEntityManager().setFlushMode(FlushModeType.COMMIT);
-				//var categoryRespository = arcContainer.instance(CategoryRespository.class).get();
-				
-				var genresId = getGenres().stream().map(Genre::getId).collect(Collectors.toList());
-				var categoriesId = getCategories().stream().map(Category::getId).collect(Collectors.toList());
-				var categoriesIdOfGenres = genreRespository.find("id in (?1)", genresId).stream()
-						.flatMap(i -> i.getCategories().stream())
-						.map(i -> i.getId())
-						.collect(Collectors.toList());
-				
-				var containsAll = categoriesIdOfGenres.containsAll(categoriesId);
-				
-				System.out.println("categoriesId: " + categoriesId);
-				System.out.println("categoriesIdOfGenres: " + categoriesIdOfGenres);
-				System.out.println("containsAll: " + containsAll);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		//throw new RestException("eroooooo");
-		//ArcContainer arcContainer = Arc.container();
-		
+		Arc.container().instance(VideoRespository.class).get().valid(this);
 	}
 	
 }

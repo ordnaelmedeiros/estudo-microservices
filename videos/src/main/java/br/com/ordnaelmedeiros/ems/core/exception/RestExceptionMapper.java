@@ -1,4 +1,4 @@
-package br.com.ordnaelmedeiros.ems.core;
+package br.com.ordnaelmedeiros.ems.core.exception;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

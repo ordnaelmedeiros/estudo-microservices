@@ -15,6 +15,7 @@ import br.com.ordnaelmedeiros.ems.models.Category;
 import br.com.ordnaelmedeiros.ems.models.Genre;
 import br.com.ordnaelmedeiros.ems.models.Video;
 import br.com.ordnaelmedeiros.ems.models.Video.Rating;
+import br.com.ordnaelmedeiros.ems.models.validation.video.VideoCategoryInGenreValidation;
 import io.quarkus.test.common.RestAssuredURLManager;
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -39,6 +40,7 @@ class VideoControllerTest {
 		RestAssuredURLManager.setURL(false, "/genres");
 		genre1.setName("Genre 1");
 		genre1.getCategories().add(category1);
+		genre1.getCategories().add(category2);
 		genre2.setName("Genre 2");
 		genre2.getCategories().add(category2);
 		genre1 = when().body(genre1).post().then().extract().as(Genre.class);
@@ -64,6 +66,23 @@ class VideoControllerTest {
 	}
 	
 	@Test
+	void categoriaDevePertencerAoGenero() {
+		
+		Video entity = new Video();
+		entity.setTitle("test");
+		entity.setDescription("teste description");
+		entity.setDuration(200);
+		entity.setYearLaunched(1986);
+		entity.getGenres().add(genre2);
+		entity.getCategories().add(category1);
+		
+		when().body(entity).post().then()
+				.statusCode(400)
+				.body(containsString(VideoCategoryInGenreValidation.MSG));
+		
+	}
+	
+	@Test
 	void crud() {
 		
 		Video entity = new Video();
@@ -71,12 +90,11 @@ class VideoControllerTest {
 		entity.setDescription("teste description");
 		entity.setDuration(200);
 		entity.setYearLaunched(1986);
+		entity.getGenres().add(genre1);
 		entity.getCategories().add(category1);
 		entity.getCategories().add(category2);
-		entity.getGenres().add(genre1);
 		
 		UUID id = when().body(entity).post().then()
-			//.body(is("ttt"))
 			.statusCode(201)
 			.extract().as(Video.class).getId();
         

@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Where;
 
+import br.com.ordnaelmedeiros.ems.core.entity.EntityBase;
+
 @Entity
 @Table(name = "categories")
 @Where(clause = "deleted_at is null")
