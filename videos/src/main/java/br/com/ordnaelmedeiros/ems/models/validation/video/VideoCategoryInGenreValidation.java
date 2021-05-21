@@ -45,7 +45,7 @@ public class VideoCategoryInGenreValidation implements VideoValidation {
 	private List<UUID> categoriesIdOfGenres(List<UUID> genresId) {
 		return genreRespository.find("id in (?1)", genresId).stream()
 				.flatMap(i -> i.getCategories().stream())
-				.map(i -> i.getId())
+				.map(Category::getId)
 				.collect(Collectors.toList());
 	}
 	
