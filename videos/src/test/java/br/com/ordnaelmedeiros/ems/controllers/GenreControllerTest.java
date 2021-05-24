@@ -6,17 +6,35 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.com.ordnaelmedeiros.ems.models.Category;
 import br.com.ordnaelmedeiros.ems.models.Genre;
 import io.quarkus.test.common.RestAssuredURLManager;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 class GenreControllerTest {
-
+	
+	static Category category1 = new Category();
+	static Category category2 = new Category();
+	
+	@BeforeAll
+	static void setUp() {
+		
+		category1.setName("Category 1");
+		category2.setName("Category 2");
+		
+		RestAssuredURLManager.setURL(false, "/categories");
+		category1 = when().body(category1).post().then().extract().as(Category.class);
+		category2 = when().body(category2).post().then().extract().as(Category.class);
+		
+	}
+	
 	@BeforeEach
 	void beforeAll() {
 		RestAssuredURLManager.setURL(false, "/genres");
@@ -27,7 +45,8 @@ class GenreControllerTest {
 		Genre genre = new Genre();
 		when().body(genre).post().then()
            .statusCode(400)
-           .body(containsString("name: não deve ser nulo"));
+           .body(containsString("name: não deve ser nulo"))
+           .body(containsString("categories: não deve estar vazio"));
 	}
 	
 	@Test
@@ -35,6 +54,7 @@ class GenreControllerTest {
 		
 		Genre genre = new Genre();
 		genre.setName("test");
+		genre.getCategories().add(category1);
 		
 		genre = when().body(genre).post().then()
            .statusCode(201)
@@ -47,10 +67,15 @@ class GenreControllerTest {
 	    	.body("isActive", is(true))
 	    	.body("createdAt", notNullValue())
 	    	.body("updatedAt", notNullValue())
-	    	.body("deletedAt", nullValue());
+	    	.body("deletedAt", nullValue())
+	    	.body("categories.size()", is(1))
+	    	.body("categories[0].name", is(category1.getName()))
+	    	;
         
         genre.setName("test 2");
         genre.setIsActive(false);
+        genre.getCategories().remove(0);
+        genre.getCategories().add(category2);
         
         when().body(genre).put("/"+genre.getId()).then()
 	    	.statusCode(204);
@@ -60,7 +85,9 @@ class GenreControllerTest {
 	    	
 	    	.body("id", is(genre.getId().toString()))
 	    	.body("name", is(genre.getName()))
-	    	.body("isActive", is(false));
+	    	.body("isActive", is(false))
+	    	.body("categories.size()", is(1))
+	    	.body("categories[0].name", is(category2.getName()));
         
         when().delete("/"+genre.getId()).then()
 	    	.statusCode(204);
@@ -82,6 +109,7 @@ class GenreControllerTest {
 		for (int i = 0; i < 10; i++) {
 			
 			Genre gen = new Genre();
+			gen.getCategories().add(category1);
 			gen.setName("test " + i);
 			
 			when().body(gen).post().then()
@@ -91,7 +119,7 @@ class GenreControllerTest {
 		
 		when().get().then()
 			.statusCode(200)
-			.body("size()", is(10));
+			.body("size()", greaterThanOrEqualTo(10));
 		
 	}
 	

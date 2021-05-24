@@ -1,4 +1,4 @@
-package br.com.ordnaelmedeiros.ems.core;
+package br.com.ordnaelmedeiros.ems.core.exception;
 
 import java.util.stream.Collectors;
 
@@ -17,8 +17,8 @@ public class ConstraintViolationMapper implements ExceptionMapper<ConstraintViol
 	@Override
 	public Response toResponse(ConstraintViolationException exception) {
 		var msg = exception.getConstraintViolations().stream()
-        	.map(this::cvToMsg)
-        	.collect(Collectors.joining(", "));
+	        	.map(this::cvToMsg)
+	        	.collect(Collectors.joining(", "));
 		return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
 	}
 	

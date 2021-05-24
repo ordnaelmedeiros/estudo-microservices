@@ -3,7 +3,7 @@ package br.com.ordnaelmedeiros.ems.controllers;
 import static br.com.ordnaelmedeiros.ems.TestUtils.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import io.quarkus.test.common.RestAssuredURLManager;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class CategoryControllerTest {
+class CategoryControllerTest {
 
 	@BeforeEach
 	void beforeAll() {
@@ -42,14 +42,10 @@ public class CategoryControllerTest {
         when().get("/"+category.getId()).then()
 	    	.statusCode(200)
 	    	.body("id", is(category.getId().toString()))
-	    	.body("isActive", is(true))
-	    	.body("createdAt", notNullValue())
-	    	.body("updatedAt", notNullValue())
 	    	.body("name", is(category.getName()))
 	    	.body("description", is(category.getDescription()));
         
         category.setName("test 2");
-        category.setIsActive(false);
         
         when().body(category).put("/"+category.getId()).then()
 	    	.statusCode(204);
@@ -57,8 +53,7 @@ public class CategoryControllerTest {
         when().get("/"+category.getId()).then()
 	    	.statusCode(200)
 	    	.body("id", is(category.getId().toString()))
-	    	.body("name", is(category.getName()))
-	    	.body("isActive", is(false));
+	    	.body("name", is(category.getName()));
         
         when().delete("/"+category.getId()).then()
 	    	.statusCode(204);
@@ -83,7 +78,7 @@ public class CategoryControllerTest {
 		
 		when().get().then()
 			.statusCode(200)
-			.body("size()", is(10));
+			.body("size()", greaterThanOrEqualTo(10));
 		
 	}
 	
