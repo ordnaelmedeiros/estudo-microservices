@@ -1,5 +1,7 @@
 package br.com.ordnaelmedeiros.ems.models;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -34,6 +36,14 @@ public class Category extends EntityBase {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public static Category withId(String id) {
+		if (id == null)
+			return null;
+		var c = new Category();
+		c.setId(UUID.fromString(id));
+		return c;
 	}
 
 }

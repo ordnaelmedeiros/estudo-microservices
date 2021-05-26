@@ -12,7 +12,11 @@ import javax.persistence.PreUpdate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
+
 @MappedSuperclass
+@JsonIdentityInfo(generator = PropertyGenerator.class, property = "id")
 public class EntityBase {
 
 	@Id
@@ -32,7 +36,9 @@ public class EntityBase {
 	public UUID getId() {
 		return id;
 	}
-	
+	public void setId(UUID id) {
+		this.id = id;
+	}
 
 	public Boolean getIsActive() {
 		return isActive;
