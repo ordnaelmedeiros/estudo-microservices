@@ -1,6 +1,7 @@
 package br.com.ordnaelmedeiros.ems;
 
-import static br.com.ordnaelmedeiros.ems.TestUtils.when;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.UUID;
 
@@ -11,9 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.ordnaelmedeiros.ems.models.Category;
 import br.com.ordnaelmedeiros.ems.models.Genre;
 import br.com.ordnaelmedeiros.ems.models.Video;
-import io.quarkus.test.common.RestAssuredURLManager;
 
-public class JsonTest {
+class JsonTest {
 
 	@Test
 	void teste() {
@@ -49,6 +49,20 @@ public class JsonTest {
 			e.printStackTrace();
 		}
 		
+		assertTrue(true);
+		
+	}
+	
+	@Test
+	void teste2() {
+		var c = Category.withId(null);
+		assertNull(c);
+	}
+	
+	@Test
+	void teste3() {
+		var c = Genre.withId(null);
+		assertNull(c);
 	}
 	
 }

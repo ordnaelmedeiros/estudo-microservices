@@ -130,15 +130,4 @@ public class Video extends EntityBase {
 		Arc.container().instance(VideoRespository.class).get().valid(this);
 	}
 	
-//	@JsonProperty("categories_id")
-//	public List<UUID> getCategoriesId() {
-//		return getCategories().stream().map(Category::getId).collect(toList());
-//	}
-//	@JsonProperty("categories_id")
-//	public void setCategoriesId(List<UUID> cagetoriesIds) {
-//		getCategories().clear();
-//		if (cagetoriesIds != null)
-//			cagetoriesIds.stream().map(Category::withId).forEach(getCategories()::add);
-//	}
-	
 }

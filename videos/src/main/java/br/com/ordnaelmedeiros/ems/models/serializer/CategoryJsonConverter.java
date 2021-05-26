@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.util.StdConverter;
 import br.com.ordnaelmedeiros.ems.models.Category;
 
 public class CategoryJsonConverter {
+	
+	private CategoryJsonConverter() {
+	}
 
 	public static class Serialize extends StdConverter<Category, String> {
 		@Override
