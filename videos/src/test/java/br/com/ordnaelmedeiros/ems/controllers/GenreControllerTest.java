@@ -3,6 +3,7 @@ package br.com.ordnaelmedeiros.ems.controllers;
 import static br.com.ordnaelmedeiros.ems.TestUtils.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -68,8 +69,8 @@ class GenreControllerTest {
 	    	.body("createdAt", notNullValue())
 	    	.body("updatedAt", notNullValue())
 	    	.body("deletedAt", nullValue())
-	    	.body("categories.size()", is(1))
-	    	.body("categories[0].name", is(category1.getName()))
+	    	.body("categories_id.size()", is(1))
+	    	.body("categories_id", hasItems(category1.getId().toString()))
 	    	;
         
         genre.setName("test 2");
@@ -86,8 +87,8 @@ class GenreControllerTest {
 	    	.body("id", is(genre.getId().toString()))
 	    	.body("name", is(genre.getName()))
 	    	.body("isActive", is(false))
-	    	.body("categories.size()", is(1))
-	    	.body("categories[0].name", is(category2.getName()));
+	    	.body("categories_id.size()", is(1))
+	    	.body("categories_id", hasItems(category2.getId().toString()));
         
         when().delete("/"+genre.getId()).then()
 	    	.statusCode(204);

@@ -16,9 +16,13 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Where;
 
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import br.com.ordnaelmedeiros.ems.core.entity.EntityBase;
+import br.com.ordnaelmedeiros.ems.models.serializer.CategoryJsonConverter;
+import br.com.ordnaelmedeiros.ems.models.serializer.GenreJsonConverter;
 import br.com.ordnaelmedeiros.ems.repository.VideoRespository;
 import io.quarkus.arc.Arc;
 
@@ -36,6 +40,7 @@ public class Video extends EntityBase {
 	private String description;
 	
 	@NotNull
+	@JsonProperty("year_launched")
 	private Integer yearLaunched;
 	
 	private Boolean opened;
@@ -47,11 +52,15 @@ public class Video extends EntityBase {
 	private Integer duration;
 	
 	@ManyToMany
-	@JsonIncludeProperties(value = {"id", "name"})
+	@JsonProperty("categories_id")
+	@JsonSerialize(contentConverter = CategoryJsonConverter.Serialize.class)
+	@JsonDeserialize(contentConverter = CategoryJsonConverter.Deserialize.class)
 	private List<Category> categories;
 	
 	@ManyToMany
-	@JsonIncludeProperties(value = {"id", "name"})
+	@JsonProperty("genres_id")
+	@JsonSerialize(contentConverter = GenreJsonConverter.Serialize.class)
+	@JsonDeserialize(contentConverter = GenreJsonConverter.Deserialize.class)
 	private List<Genre> genres;
 	
 	public String getTitle() {

@@ -2,6 +2,7 @@ package br.com.ordnaelmedeiros.ems.controllers;
 
 import static br.com.ordnaelmedeiros.ems.TestUtils.when;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
@@ -104,14 +105,13 @@ class VideoControllerTest {
 	    	.body("title", is(entity.getTitle()))
 	    	.body("description", is(entity.getDescription()))
 	    	.body("duration", is(entity.getDuration()))
-	    	.body("yearLaunched", is(entity.getYearLaunched()))
+	    	.body("year_launched", is(entity.getYearLaunched()))
 	    	.body("opened", is(false))
 	    	.body("rating", is(Rating.L.name()))
-	    	.body("categories.size()", is(2))
-	    	.body("categories[0].name", is(category1.getName()))
-	    	.body("categories[1].name", is(category2.getName()))
-	    	.body("genres.size()", is(1))
-	    	.body("genres[0].name", is(genre1.getName()))
+	    	.body("categories_id.size()", is(2))
+	    	.body("categories_id", hasItems(category1.getId().toString(), category2.getId().toString()))
+	    	.body("genres_id.size()", is(1))
+	    	.body("genres_id", hasItems(genre1.getId().toString()))
 	    	;
         
         entity.setTitle("test 2");
@@ -133,15 +133,15 @@ class VideoControllerTest {
 	    	.body("title", is(entity.getTitle()))
 	    	.body("description", is(entity.getDescription()))
 	    	.body("duration", is(entity.getDuration()))
-	    	.body("yearLaunched", is(entity.getYearLaunched()))
+	    	.body("year_launched", is(entity.getYearLaunched()))
 	    	.body("opened", is(entity.getOpened()))
 	    	.body("rating", is(entity.getRating().name()))
-	    	.body("categories.size()", is(1))
-	    	.body("categories[0].name", is(category2.getName()))
-	    	.body("genres.size()", is(2))
-	    	.body("genres[0].name", is(genre1.getName()))
-	    	.body("genres[1].name", is(genre2.getName()));
-        
+	    	.body("categories_id.size()", is(1))
+	    	.body("categories_id", hasItems(category2.getId().toString()))
+	    	.body("genres_id.size()", is(2))
+	    	.body("genres_id", hasItems(genre1.getId().toString(), genre2.getId().toString()))
+	    	;
+	    	
         when().delete("/"+id).then()
 	    	.statusCode(204);
         
